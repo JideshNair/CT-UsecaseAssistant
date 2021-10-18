@@ -1,0 +1,883 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CT Assitant</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="normalize.css">
+        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="jquery.steps.css">
+        <script src="modernizr-2.6.2.min.js"></script>
+    
+        <script src="jquery.cookie-1.3.1.js"></script>
+        <script src="jquery.steps.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+  <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />
+<link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_dots.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<style type="text/css">
+    h1{
+color: #fff;
+font-weight: normal;
+}
+    .draggable-main{
+width: 800px;
+margin: 0 auto;
+}
+.box {
+float: left;
+width: 45%;
+margin-right: 5%;
+
+border-radius: 2px;
+}
+.box:last-child{
+margin: 0px;
+}
+.mt-100 {
+    margin-top: 100px
+}   
+.box .connected-sortable {
+list-style: none;
+padding: 20px;
+margin: 0px;
+}
+.choices__inner {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    background-color: #fff; !important
+    padding: 7.5px 7.5px 3.75px;
+    border: 0px; !important
+    border-radius: 2.5px;
+    font-size: 14px;
+    min-height: 44px;
+    overflow: hidden;
+}
+.choices__input {
+    display: inline-block;
+    vertical-align: baseline;
+    background-color: #fff;  !important
+    font-size: 14px;
+    margin-bottom: 5px;
+    border: 0;
+    border-radius: 0;
+    max-width: 100%;
+    padding: 4px 0 4px 2px;
+}
+.box ul > li{
+width: inherit;
+padding: 15px 20px;
+background-color: #fff;
+border-bottom: 1px solid #c1c1c1;
+color: #000;
+font-size: 15px;
+margin-bottom: 4px;
+border-radius: 5px;
+-webkit-transition: transform 0.25s ease-in-out;
+-moz-transition: transform 0.25s ease-in-out;
+-o-transition: transform 0.25s ease-in-out;
+transition: transform 0.25s ease-in-out;
+-webkit-transition: box-shadow 0.25s ease-in-out;
+-moz-transition: box-shadow 0.25s ease-in-out;
+-o-transition: box-shadow 0.25s ease-in-out;
+transition: box-shadow 0.25s ease-in-out;
+}
+.my-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+ul li:hover {
+cursor: pointer;
+background-color: #fff;
+color: #000;
+}
+ul li.ui-sortable-helper {
+background-color: #e5e5e5;
+-webkit-box-shadow: 0 0 8px rgba(53, 41, 41, 0.8);
+-moz-box-shadow: 0 0 8px rgba(53, 41, 41, 0.8);
+box-shadow: 0 0 8px rgba(53, 41, 41, 0.8);
+transform: scale(1.015);
+z-index: 100;
+}
+ul li.ui-sortable-placeholder {
+background-color: #ddd;
+-moz-box-shadow: inset 0 0 10px #000000;
+-webkit-box-shadow: inset 0 0 10px #000000;
+box-shadow: inset 0 0 10px #000000;
+}
+.row{
+  
+}
+
+.clickable{
+    cursor: pointer;   
+}
+
+.panel-heading span {
+    margin-top: -20px;
+    font-size: 15px;
+}
+.panel-body {
+    padding: 0px;
+}
+.panel-primary {
+    border-color: none;
+}
+.table-wrapper {
+    width: 700px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;  
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+}
+.table-title h2 {
+    margin: 6px 0 0;
+    font-size: 22px;
+}
+.table-title .add-new {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+.table-title .add-new i {
+    margin-right: 4px;
+}
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0rem rgba(0, 123, 255, .25)
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 0rem rgba(108, 117, 125, .5)
+}
+
+.close:focus {
+    box-shadow: 0 0 0 0rem rgba(108, 117, 125, .5)
+}
+
+.mt-200 {
+    margin-top: 200px
+}
+table.table {
+    table-layout: fixed;
+}
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+table.table th:last-child {
+    width: 100px;
+}
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}    
+table.table td a.add {
+    color: #27C46B;
+}
+table.table td a.edit {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+}
+.chip {
+    display: inline-block;
+    padding: 0 10px;
+    height: 20px;
+    font-size: 15px;
+    line-height: 20px;
+    border-radius: 25px;
+    background-color: #f1f1f1;
+}
+
+.chip img {
+  float: left;
+  margin: 0 10px 0 -25px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.closebtn {
+  padding-left: 10px;
+  color: #888;
+  font-weight: bold;
+  float: right;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: #000;
+}
+table.table td i {
+    font-size: 19px;
+}
+table.table td a.add i {
+    font-size: 24px;
+    margin-right: -1px;
+    position: relative;
+    top: 3px;
+}    
+table.table .form-control {
+    height: 32px;
+    line-height: 32px;
+    box-shadow: none;
+    border-radius: 2px;
+}
+table.table .form-control.error {
+    border-color: #f50000;
+}
+table.table td .add {
+    display: none;
+}
+sw-theme-dots>ul.step-anchor>li.done>a {
+     color: #ccc; 
+}
+.sw-theme-dots>ul.step-anchor>li.done>a:after {
+    background: #00000000;  !important
+}
+.sw-theme-dots>ul.step-anchor>li>a:after {
+    content: ' ';
+    position: relative;
+    left: 43%;
+    bottom: 2px;
+    margin-top: 10px;
+    display: block;
+    width: 20px; !important
+    height: 20px; !important
+    background: #337ab7; !important
+    z-index: 99;
+    border-radius: 50%; !important
+}
+.btn2 {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* Darker background on mouse-over */
+.btn2:hover {
+  background-color: RoyalBlue;
+}
+.sw-theme-dots>ul.step-anchor>li>a:before {
+    content: ' ';
+    position: absolute;
+    bottom: 2px;
+    left: 40%;
+    margin-top: 10px;
+    display: block;
+    border-radius: 50%;
+    color: #428bca;
+    background: #00000000; !important 
+    border: none;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+    z-index: 98;
+}
+.sw-theme-dots>ul.step-anchor>li>a:after {
+    content: ' ';
+    position: relative;
+    left: 43%;
+    bottom: 2px;
+    margin-top: 10px;
+    display: block;
+    width: 15px;
+    height: 15px;
+    background: #00000000; !important
+    border-radius: 50%;
+    z-index: 99;
+}
+.sw-theme-dots>ul.step-anchor>li.active>a:after {
+    background: #2184be; !important
+}
+
+</style>
+<script>
+$(document).ready(function(){
+
+});
+</script>
+</style>
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+
+        <div class="content">
+            <h1>Basic Demo</h1>
+
+            <script>
+                $(function ()
+                {
+                    $("#wizard").steps({
+                        headerTag: "h2",
+                        bodyTag: "section",
+                        transitionEffect: "slideLeft",
+                        stepsOrientation: "vertical"
+                    });
+                });
+            </script>
+                <script type="text/javascript">
+        
+$(document).ready(function(){
+$(".panel-heading span.clickable").trigger("click");
+    $(".draggable-left, .draggable-right").sortable({
+connectWith: ".connected-sortable",
+stack: ".connected-sortable ul"
+}).disableSelection();
+    });
+$(document).on('click', '.panel-heading span.clickable', function(e){
+    var $this = $(this);
+    if(!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+    }
+})
+$(document).ready(function () {
+    var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+removeItemButton: true,
+maxItemCount:5,
+searchResultLimit:5,
+renderChoiceLimit:5
+});
+
+
+$('#smartwizard').smartWizard({
+selected: 0,
+theme: 'dots',
+autoAdjustHeight:true,
+transitionEffect:'fade',
+showStepURLhash: false,
+
+});
+      
+    $("#myBtn").click(function(){
+         $('#myModal').modal('show');
+    });
+       console.log("testing");
+    $('[data-toggle="tooltip"]').tooltip();
+    var actions = $("table td:last-child").html();
+    // Append table with add row form on add new button click
+    $(".add-new").click(function(){
+        console.log("testing");
+        $(this).attr("disabled", "disabled");
+        var index = $("table tbody tr:last-child").index();
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+            '<td>' + actions + '</td>' +
+        '</tr>';
+        $("table").append(row);     
+        $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    // Add row on add button click
+    $(document).on("click", ".add", function(){
+         console.log("testing");
+        var empty = false;
+        var input = $(this).parents("tr").find('input[type="text"]');
+        input.each(function(){
+            if(!$(this).val()){
+                $(this).addClass("error");
+                empty = true;
+            } else{
+                $(this).removeClass("error");
+            }
+        });
+        $(this).parents("tr").find(".error").first().focus();
+        if(!empty){
+            input.each(function(){
+                $(this).parent("td").html($(this).val());
+            });         
+            $(this).parents("tr").find(".add, .edit").toggle();
+            $(".add-new").removeAttr("disabled");
+        }       
+    });
+    // Edit row on edit button click
+    $(document).on("click", ".edit", function(){        
+        $(this).parents("tr").find("td:not(:last-child)").each(function(){
+            $(this).html('<input type="text" class="form-control" value="' + $(this).text() + '">');
+        });     
+        $(this).parents("tr").find(".add, .edit").toggle();
+        $(".add-new").attr("disabled", "disabled");
+    });
+    // Delete row on delete button click
+    $(document).on("click", ".delete", function(){
+        $(this).parents("tr").remove();
+        $(".add-new").removeAttr("disabled");
+    });
+});
+    </script>
+
+
+            <div id="wizard">
+                <h2>Choose Your vertical</h2>
+                <section>
+               <div class="row d-flex justify-content-center mt-100"style="width: 100%;">
+    <div class="col-md-6"style="width: 100%"> <select id="choices-multiple-remove-button" placeholder="Select your Business Vertical" multiple style="width: 100%">
+            <option value="E-commerce">E-commerce</option>
+            <option value="OTT">OTT</option>
+           
+        </select> </div>
+</div>
+                </section>
+
+                <h2>Choose Business Usecases</h2>
+                <section>
+         <div class="draggable-main">
+<div class="box" style="border: none;">
+    <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Increase New User Retention</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+                  <div class="panel-body" style="overflow-y: scroll;height: 400px">  
+               <ul class="connected-sortable draggable-left">
+<li data-toggle="modal" data-target="#myModal"><div class="chip" style="float:right;">
+  Web
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+<div class="chip" style="float:right;">
+  Mobile
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div><br>Convert Anonymous users to named users</li>
+<li><div class="chip" style="float:right;">
+  Web
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+<div class="chip" style="float:right;">
+  Mobile
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+
+    <br>
+Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+    <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Increase User Engagement</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+
+                  <div class="panel-body"style="overflow-y: scroll;height: 400px"> 
+                  <div class=""></div> 
+               <ul class="connected-sortable draggable-left">
+<li>Use case 1</li>
+<li>Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+</div>
+<div class="box">
+     <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Your Business Use cases</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+                <div class="panel-collapsed">
+                  <div class="panel-body" style="overflow-y: scroll;height: 1000px">  
+<ul class="connected-sortable draggable-right">
+<li style="background: #00000000;border-bottom: 0;"></li>
+
+</ul>
+ </div>
+ </div>
+        </div>
+       
+    </div>
+</div>
+                </section>
+
+                <h2>Download Account Map Sheet</h2>
+                <section>
+                   <div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>User<b>Properties</b></h2></div>
+                  
+            
+                      <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                        
+                  
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Sample Values</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Email</td>
+                        <td>jjideshnair8@gmail.com</td>
+                        <td>Registered email address of the user</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Country</td>
+                        <td>India</td>
+                        <td>Country of residence of the user</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>Mumbai</td>
+                        <td>City of residence of the user</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>      
+                </tbody>
+            </table>
+            <div class="dropdown" style="
+    position: absolute;
+">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Language
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Android-Java</a></li>
+      <li><a href="#">IOS-Swift</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div> <button type="button" class="btn btn-info add-new" style="
+    float: left;
+    margin-left: 150px;
+"><i class="fa fa-plus" ></i> Download Code </button>
+ 
+            <button type="button" class="btn btn-info add-new" style="margin-left: 10px;"><i class="fa fa-plus"></i> Download CSV </button>
+              
+
+
+        </div>
+    </div>
+</div>     
+
+ <div class="container-lg">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-8"><h2>Event  &<b> Event Properties</b></h2></div>
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New Event</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Events</th>
+                        <th>Event property</th>
+                        <th>Description</th>
+                        <th>Datatype</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sign Up</td>
+                        <td></td>
+                        <td>After successfull sign Up</td>
+                        <td>String</td>
+                        <td>
+                            <a class="add" title="Add" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a>
+                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a class="delete" title="Add Event property" data-toggle="tooltip"><i class="glyphicon glyphicon-edit"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Mode</td>
+                        <td>Mode used by the user to sign up</td>
+                        <td>
+                            String
+                        </td>
+                        <td>
+                    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>Status</td>
+                        <td>Status of sign up</td>
+                        <td>
+                            String
+                        </td>
+                        <td>
+                    
+                        </td>
+                    </tr>      
+                </tbody>
+            </table>
+             <div class="dropdown" style="
+    position: absolute;
+">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Select Language
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Android-Java</a></li>
+      <li><a href="#">IOS-Swift</a></li>
+      <li><a href="#">JavaScript</a></li>
+    </ul>
+  </div> <button type="button" class="btn btn-info add-new" style="
+    float: left;
+    margin-left: 150px;
+"><i class="fa fa-plus" ></i> Download Code </button>
+ 
+            <button type="button" class="btn btn-info add-new" style="margin-left: 10px;"><i class="fa fa-plus"></i> Download CSV </button>
+              
+
+        </div>
+    </div>
+</div>     
+                </section>
+
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: fit-content;max-width: 700px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                 <h4 class="modal-title" id="myModalLabel">Convert Anonymous users to named users</h4>
+
+            </div>
+             <div class="modal-body">
+                    <div id="smartwizard">
+                        <ul style="
+    margin: 0px;
+">
+                            <li><a href="#step-1" style="
+    color: #2184be;
+">Use Case <br /><small>Description</small></a></li>
+                            <li><a href="#step-2"style="
+    color: #2184be;
+">Mode of engagments<br /><small>possible</small></a></li>
+                            <li><a href="#step-3"style="
+    color: #2184be;
+">How to<br /><small>achive it?</small></a></li>
+                            <li><a href="#step-4"style="
+    color: #2184be;
+">Events<br /><small>& Event Properties</small></a></li>
+                             <li><a href="#step-5"style="
+    color: #2184be;
+">User<br /><small>Properties</small></a></li>
+                        </ul>
+                        <div>
+                            <div id="step-1">
+                                <div class="row">
+                                    <div class="col-md-6">How to achieve this use case description </div>
+                                </div>
+                            </div>
+                            <div id="step-2">
+                                <div class="row">
+                                    <div class="col-md-6">   <div class="table-responsive" style="
+    width: 600px;
+">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Email</th>
+                              <th>Mobile Push</th>
+                              <th>Web Push</th>
+                              <th>SMS</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                <td>yes</td>
+                                <td>yes</td>
+                                <td>yes</td>
+                                <td>yes</td>
+                            </tr>
+                            
+                          </tbody>
+                        </table> </div></div>
+                                </div>
+                            </div>
+                            <div id="step-3" class="">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <iframe width="600px" height="400px" src="https://www.youtube.com/embed/tgbNymZ7vqY">
+</iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="step-4" class="">
+                                <div class="row">
+                                    <div class="col-md-12">     <div class="table-responsive" 
+">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>Events</th>
+                              <th>Event properties</th>
+                              <th>Description</th>
+                              <th>Datatype</th>
+                              <th>Platform</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                                <td>Sign Up</td>
+                                <td></td>
+                                <td>After user successfully signs up</td>
+                                <td></td>
+                                <td>Web and Mobile</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Mode of sign up</td>
+                                <td>Mode(social sign in ,email/password)</td>
+                                <td>String</td>
+                                <td>Web and Mobile</td>
+                            </tr>
+                             <tr>
+                                <td></td>
+                                <td>Status</td>
+                                <td>Success/failure</td>
+                                <td>String</td>
+                                <td>Web and Mobile</td>
+                            </tr>
+                          </tbody>
+                        </table> </div>
+                                </div>
+                            </div>
+                        </div>
+                              <div id="step-5" class="">
+                                <div class="row">
+                                    <div class="col-md-12">     <div class="table-responsive" >
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                           <th>Key</th>
+                        <th>Sample Values</th>
+                        <th>Description</th>
+                       
+                            </tr>
+                          </thead>
+                          <tbody>
+                                <tr>
+                             <td>Email</td>
+                        <td>jjideshnair8@gmail.com</td>
+                        <td>Registered email address of the user</td>
+                            </tr>
+                            
+                          </tbody>
+                        </table> </div>
+                                </div>
+                            </div>
+                        </div>
+                </div></div>
+         
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
