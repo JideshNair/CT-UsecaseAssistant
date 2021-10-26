@@ -165,6 +165,19 @@ box-shadow: inset 0 0 10px #000000;
 .table-title .add-new i {
     margin-right: 4px;
 }
+.table-title .add-new-events {
+    float: right;
+    height: 30px;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: none;
+    min-width: 100px;
+    border-radius: 50px;
+    line-height: 13px;
+}
+.table-title .add-new-events i {
+    margin-right: 4px;
+}
 .form-control:focus {
     color: #495057;
     background-color: #fff;
@@ -404,7 +417,7 @@ showStepURLhash: false,
     $('[data-toggle="tooltip"]').tooltip();
     var actions = $("table td:last-child").html();
     // Append table with add row form on add new button click
-    $(".add-new").click(function(){
+    $(".add-new").click(function(){ 
         console.log("testing");
         $(this).attr("disabled", "disabled");
         var index = $("table tbody tr:last-child").index();
@@ -414,7 +427,22 @@ showStepURLhash: false,
             '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
             '<td>' + actions + '</td>' +
         '</tr>';
-        $("table").append(row);     
+        $("#userproperties-table").append(row);     
+        $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+     $(".add-new-events").click(function(){ 
+        console.log("testing-new");
+        $(this).attr("disabled", "disabled");
+        var index = $("table tbody tr:last-child").index();
+        var row = '<tr>' +
+            '<td><input type="text" class="form-control" name="name" id="name"></td>' +
+            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+            '<td><input type="text" class="form-control" name="department" id="department"></td>' +
+            '<td><input type="text" class="form-control" name="phone" id="phone"></td>' +
+            '<td>' + actions + '</td>' +
+        '</tr>';
+        $("#event-table").append(row);     
         $("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
         $('[data-toggle="tooltip"]').tooltip();
     });
@@ -453,9 +481,88 @@ showStepURLhash: false,
         $(this).parents("tr").remove();
         $(".add-new").removeAttr("disabled");
     });
-});
-    </script>
 
+});
+
+    </script>
+<script type="text/javascript">
+    function downloadTable(idTable) {
+    console.log("testing php");
+  function convertData() {
+    function convertDataRow(elRow) {
+      function convertDataCell(elCell) {
+        return elCell.textContent.trim(); // Convert cell contents to plain text
+      }
+      var $cells = elRow.getElementsByTagName("td"); // Get all cells in this row
+      // Convert the NodeList to an array and return an array of plain-text cell contents
+      return Array.prototype.slice.call($cells).map(convertDataCell);
+    }
+    // Get all the rows in the table body
+    var $rows = document.getElementById(idTable).querySelectorAll("tbody tr");
+    // Convert the NodeList to an array and return an array of arrays with cell contents
+    return Array.prototype.slice.call($rows).map(convertDataRow);
+  }
+  function convertHeaders() {
+    function convertHeader(elHeader) {
+      return elHeader.textContent.trim(); // Convert header contents to plain text.
+    }
+    // Get all headers in the table header
+    var $headers = document.getElementById(idTable).querySelectorAll("thead th");
+    // Convert the NodeList to an array and return an array of header contents.
+    return Array.prototype.slice.call($headers).map(convertHeader);
+  }
+  function convertToCsv(data) {
+    function convertCellToCsv(elData) {
+      // Escape any quotes before returning the quoted string
+      return "\"" + (elData || "").replace(/"/g, "\"\"") + "\"";
+    }
+    function convertRowToCsv(elRow) {
+      // Return a comma-separated string of data values
+      return elRow.map(convertCellToCsv).join(",");
+    }
+    // Return each row on its own line
+    return data.map(convertRowToCsv).join("\n");
+  }
+  var csvToExport = convertToCsv([convertHeaders()].concat(convertData()));
+  var dateNow = new Date();
+  var timeStamp = (new Date(dateNow - dateNow.getTimezoneOffset() * 60000)) // Local time
+    .toISOString() // Convert to ISO 8601 string
+    .replace(/[^\d]/g, "-") // Turn anything that isn't a digit into a hyphen
+    .replace(/-\d+-$/, ""); // Strip off the milliseconds
+  var nameFile = "download-" + timeStamp + ".csv";
+  if (navigator.msSaveBlob) { // Are we running this in IE?
+    // Yes, we are running this in IE. Use IE-specific functionality.
+    var blobExport = new Blob([csvToExport], { type: "text/csv;charset=utf-8," });
+    navigator.msSaveBlob(blobExport, nameFile);
+  } else {
+    // No, we are not running this in IE. Use the iframe/link workaround.
+    var urlData = "data:text/csv;charset=utf-8," + encodeURIComponent(csvToExport);
+    // Create the iframe element and set up its attributes and styling
+    var $iframe = document.createElement("iframe");
+    $iframe.setAttribute("name", "iframe_download");
+    $iframe.setAttribute("src", "about:blank");
+    $iframe.style.visibility = "hidden";
+    document.body.appendChild($iframe);
+    // Create the a element and set up its attributes and styling.
+    var $link = document.createElement("a");
+    $link.setAttribute("download", nameFile);
+    $link.setAttribute("href", urlData);
+    // The target value should equal the iframe's name value.
+    $link.setAttribute("target", "iframe_download");
+    $link.style.visibility = "hidden";
+    document.body.appendChild($link);
+    // After the iframe loads, clean up the iframe and a elements.
+    $iframe.addEventListener(
+      "load",
+      function () {
+        document.body.removeChild($iframe);
+        document.body.removeChild($link);
+      }
+    );
+    $link.click(); // Send a click event to the link
+  }
+}
+</script>
 
             <div id="wizard">
                 <h2>Choose Your vertical</h2>
@@ -575,6 +682,144 @@ Use case 2</li>
     </div>
 </div>
                 </section>
+                            <h2>Confirm Your Business Usecases</h2>
+                <section>
+         <div class="draggable-main">
+<div class="box" style="border: none;">
+    <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Increase New User Retention</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+                  <div class="panel-body" style="overflow-y: scroll;height: 400px">  
+               <ul class="connected-sortable draggable-left">
+<li data-toggle="modal" data-target="#myModal"><div class="chip" style="float:right;">
+  Web
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+<div class="chip" style="float:right;">
+  Mobile
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div><br>Convert Anonymous users to named users</li>
+<li><div class="chip" style="float:right;">
+  Web
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+<div class="chip" style="float:right;">
+  Mobile
+  <span class="closebtn" onclick="this.parentElement.style.display='none'">&times;</span>
+
+</div>
+
+    <br>
+Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+    <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Increase User Engagement</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+
+                  <div class="panel-body"style="overflow-y: scroll;height: 400px"> 
+                  <div class=""></div> 
+               <ul class="connected-sortable draggable-left">
+<li>Use case 1</li>
+<li>Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+</div>
+<div class="box">
+        <div class="container"style="
+    width: 100%;"
+>
+    <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Increase Order Transactions</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+
+                  <div class="panel-body"style="overflow-y: scroll;height: 400px"> 
+                  <div class=""></div> 
+               <ul class="connected-sortable draggable-left">
+<li>Use case 1</li>
+<li>Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+        <div class="row">
+        <div class="col-md-6" style="width: 100%;padding: 0">
+            <div class="panel panel-primary" style="background: #e5e5e5;padding: 0px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Reduce User Churn</h3>
+                    <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                </div>
+
+                  <div class="panel-body"style="overflow-y: scroll;height: 400px"> 
+                  <div class=""></div> 
+               <ul class="connected-sortable draggable-left">
+<li>Use case 1</li>
+<li>Use case 2</li>
+<li>Use case 3</li>
+<li>Use case 4</li>
+<li>Use case 5</li>
+<li>Use case 6</li>
+<li>Use case 7</li>
+</ul>
+</div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+</div>
+                </section>
+
 
                 <h2>Download Account Map Sheet</h2>
                 <section>
@@ -591,7 +836,7 @@ Use case 2</li>
                   
                 </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="userproperties-table">
                 <thead>
                     <tr>
                         <th>Key</th>
@@ -648,7 +893,7 @@ Use case 2</li>
     margin-left: 150px;
 "><i class="fa fa-plus" ></i> Download Code </button>
  
-            <button type="button" class="btn btn-info add-new" style="margin-left: 10px;"><i class="fa fa-plus"></i> Download CSV </button>
+            <button type="button" class="btn btn-info "onclick="downloadTable('userproperties-table')" style="margin-left: 10px;"><i class="fa fa-plus"></i> Download CSV </button>
               
 
 
@@ -663,11 +908,11 @@ Use case 2</li>
                 <div class="row">
                     <div class="col-sm-8"><h2>Event  &<b> Event Properties</b></h2></div>
                     <div class="col-sm-4">
-                        <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New Event</button>
+                        <button type="button" class="btn btn-info add-new-events"><i class="fa fa-plus"></i> Add New Event</button>
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="event-table">
                 <thead>
                     <tr>
                         <th>Events</th>
@@ -687,7 +932,7 @@ Use case 2</li>
                             <a class="add" title="Add" data-toggle="tooltip"><i class="glyphicon glyphicon-plus"></i></a>
                             <a class="edit" title="Edit" data-toggle="tooltip"><i class="glyphicon glyphicon-pencil"></i></a>
                             <a class="delete" title="Delete" data-toggle="tooltip"><i class="glyphicon glyphicon-remove"></i></a>
-                            <a class="delete" title="Add Event property" data-toggle="tooltip"><i class="glyphicon glyphicon-edit"></i></a>
+                            <a class="ep" title="Add Event property" data-toggle="tooltip"><i class="glyphicon glyphicon-edit"></i></a>
                         </td>
                     </tr>
                     <tr>
@@ -724,12 +969,13 @@ Use case 2</li>
       <li><a href="#">IOS-Swift</a></li>
       <li><a href="#">JavaScript</a></li>
     </ul>
-  </div> <button type="button" class="btn btn-info add-new" style="
+  </div> 
+  <a href="clevertap_events.zip" download="clevertap_events.zip"><button type="button" class="btn btn-info" style="
     float: left;
     margin-left: 150px;
-"><i class="fa fa-plus" ></i> Download Code </button>
- 
-            <button type="button" class="btn btn-info add-new" style="margin-left: 10px;"><i class="fa fa-plus"></i> Download CSV </button>
+" ><i class="fa fa-plus" ></i> Download Code </button></a>
+
+            <button type="button" class="btn btn-info" onclick="downloadTable('event-table')" style="margin-left: 10px;"><i class="fa fa-plus"> </i> Download CSV </button>
               
 
         </div>
