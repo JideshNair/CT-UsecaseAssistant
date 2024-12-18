@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom PiP with Corner Buttons</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #pipContainer {
+      position: fixed;
+      width: 320px;
+      height: 180px;
+      bottom: 20px;
+      right: 20px;
+      background-color: black;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      z-index: 1000;
+      cursor: grab;
+    }
+
+    #pipVideo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .pipControls {
+      position: absolute;
+    }
+
+    #closePip {
+      top: 5px;
+      right: 5px;
+      background-color: #ff5c5c;
+    }
+
+    #fullScreenPip {
+      bottom: 5px;
+      right: 5px;
+      background-color: #007bff;
+    }
+
+    #toggleSound {
+      bottom: 5px;
+      left: 5px;
+      background-color: #ffcc00;
+    }
+
+    button {
+      position: absolute;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    button.close:hover {
+      background-color: #e63939;
+    }
+
+    button.sound:hover {
+      background-color: #e6b800;
+    }
+  </style>
+</head>
+<body>
+  <div id="pipContainer">
+    <video id="pipVideo" autoplay muted>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <button id="closePip" class="close">Close</button>
+    <button id="fullScreenPip">Full Screen</button>
+    <button id="toggleSound" class="sound">🔇</button>
+  </div>
+
+  <script>
+    const pipContainer = document.getElementById('pipContainer');
+    const pipVideo = document.getElementById('pipVideo');
+    const closePip = document.getElementById('closePip');
+    const fullScreenPip = document.getElementById('fullScreenPip');
+    const toggleSound = document.getElementById('toggleSound');
+
+    // Variables for dragging
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    // Drag start
+    pipContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      offsetX = e.offsetX;
+      offsetY = e.offsetY;
+      pipContainer.style.cursor = 'grabbing';
+    });
+
+    // Dragging
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        pipContainer.style.left = `${e.clientX - offsetX}px`;
+        pipContainer.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+
+    // Drag end
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      pipContainer.style.cursor = 'grab';
+    });
+
+    // Close PiP
+    closePip.addEventListener('click', () => {
+      pipContainer.style.display = 'none';
+      pipVideo.pause();
+    });
+
+    // Full Screen PiP (for WebView compatibility)
+    fullScreenPip.addEventListener('click', () => {
+      // Try fullscreen first (WebView may not support it)
+      if (pipVideo.requestFullscreen) {
+        pipVideo.requestFullscreen();
+      } else if (pipVideo.webkitRequestFullscreen) {
+        pipVideo.webkitRequestFullscreen(); // Safari and iOS WebView
+      } else if (pipVideo.msRequestFullscreen) {
+        pipVideo.msRequestFullscreen(); // IE11
+      } else {
+        // Fallback for WebView if fullscreen isn't supported
+        pipContainer.style.position = 'fixed';
+        pipContainer.style.top = '0';
+        pipContainer.style.left = '0';
+        pipContainer.style.width = '100vw';
+        pipContainer.style.height = '100vh';
+        pipContainer.style.zIndex = '9999';
+      }
+    });
+
+    // Toggle Sound
+    toggleSound.addEventListener('click', () => {
+      if (pipVideo.muted) {
+        pipVideo.muted = false;
+        toggleSound.textContent = "🔊";
+      } else {
+        pipVideo.muted = true;
+        toggleSound.textContent = "🔇";
+      }
+    });
+  </script>
+</body>
+</html>
